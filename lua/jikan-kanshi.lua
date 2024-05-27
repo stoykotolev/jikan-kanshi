@@ -9,25 +9,19 @@ local function bufLeave()
 end
 
 local function setup()
-    vim.api.nvim_create_autocmd(
-        "BufEnter",
-        {
-            group = augroup,
-            desc = "Start the duration timer for the open filetype",
-            once = true,
-            callback = bufEnter,
-        }
-    )
+    vim.api.nvim_create_autocmd("FileType", {
+        group = augroup,
+        desc = "Start the duration timer for the open filetype",
+        once = true,
+        callback = bufEnter,
+    })
 
-    vim.api.nvim_create_autocmd(
-        "BufLeave",
-        {
-            group = augroup,
-            desc = "End the duration timer for the open filetype",
-            once = true,
-            callback = bufLeave,
-        }
-    )
+    vim.api.nvim_create_autocmd("BufLeave", {
+        group = augroup,
+        desc = "End the duration timer for the open filetype",
+        once = true,
+        callback = bufLeave,
+    })
 end
 
 return { setup = setup }
