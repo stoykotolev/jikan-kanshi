@@ -23,7 +23,8 @@ function M:bufLeave()
     end
     endTime = os.time()
     local timeSpent = os.difftime(endTime, startTime)
-    Data.data[fileType] = timeSpent
+    -- Add timeSpent to the existing value or set it if it doesn't exist
+    Data.data[fileType] = (Data.data[fileType] or 0) + timeSpent
     Data:write()
 end
 
