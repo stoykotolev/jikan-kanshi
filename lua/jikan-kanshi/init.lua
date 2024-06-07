@@ -8,7 +8,7 @@ local function setup()
         group = augroup,
         desc = "Start the duration timer for the open filetype",
         once = true,
-        callback = function ()
+        callback = function()
             BufFunctions:bufEnter()
         end,
     })
@@ -17,7 +17,7 @@ local function setup()
         group = augroup,
         desc = "End the duration timer for the open filetype",
         once = true,
-        callback = function ()
+        callback = function()
             BufFunctions:bufLeave()
         end,
     })

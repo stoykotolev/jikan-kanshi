@@ -1,5 +1,9 @@
 local Data = require("jikan-kanshi.data")
 
+local function checkInvalidFT(fileType)
+    return fileType == nil or fileType == "" or fileType == "TelescopePrompt"
+end
+
 local startTime
 local endTime
 local fileType
@@ -8,10 +12,18 @@ local M = {}
 
 function M:bufEnter()
     fileType = vim.bo.filetype
+    print("Filetype is " .. fileType)
+    if checkInvalidFT(fileType) then
+        return
+    end
     startTime = os.time()
 end
 
 function M:bufLeave()
+    if checkInvalidFT(fileType) then
+        return
+    end
+    print("Leaving filetype " .. fileType)
     endTime = os.time()
     local timeSpent = os.difftime(endTime, startTime)
     Data:write(
@@ -20,4 +32,3 @@ function M:bufLeave()
 end
 
 return M
-
