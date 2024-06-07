@@ -13,8 +13,9 @@ function JikanKanshiData:ensure_data_path_exists()
     end
 end
 
-function JikanKanshiData:write(string)
-    Path:new(self.data_path .. "/filetype.txt"):write(string, "a")
+function JikanKanshiData:write(data)
+    Path:new(self.data_path .. "/filetype.json")
+        :write(vim.json.encode(data), "w")
 end
 
 return JikanKanshiData

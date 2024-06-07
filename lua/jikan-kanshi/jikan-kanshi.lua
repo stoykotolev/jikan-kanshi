@@ -4,6 +4,8 @@ local function checkInvalidFT(fileType)
     return fileType == nil or fileType == "" or fileType == "TelescopePrompt"
 end
 
+local fileTypesData = {}
+
 local startTime
 local endTime
 local fileType
@@ -12,7 +14,6 @@ local M = {}
 
 function M:bufEnter()
     fileType = vim.bo.filetype
-    print("Filetype is " .. fileType)
     if checkInvalidFT(fileType) then
         return
     end
@@ -23,12 +24,10 @@ function M:bufLeave()
     if checkInvalidFT(fileType) then
         return
     end
-    print("Leaving filetype " .. fileType)
     endTime = os.time()
     local timeSpent = os.difftime(endTime, startTime)
-    Data:write(
-        fileType .. " has been opened for " .. timeSpent .. " seconds.\n"
-    )
+    fileTypesData[fileType] = timeSpent
+    Data:write(fileTypesData)
 end
 
 return M
