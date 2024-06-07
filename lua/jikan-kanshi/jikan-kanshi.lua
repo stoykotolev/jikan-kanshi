@@ -3,9 +3,6 @@ local Data = require("jikan-kanshi.data")
 local function checkInvalidFT(fileType)
     return fileType == nil or fileType == "" or fileType == "TelescopePrompt"
 end
-
-local fileTypesData = {}
-
 local startTime
 local endTime
 local fileType
@@ -26,8 +23,8 @@ function M:bufLeave()
     end
     endTime = os.time()
     local timeSpent = os.difftime(endTime, startTime)
-    fileTypesData[fileType] = timeSpent
-    Data:write(fileTypesData)
+    Data.data[fileType] = timeSpent
+    Data:write()
 end
 
 return M

@@ -3,7 +3,7 @@ local Data = require("jikan-kanshi.data")
 local BufFunctions = require("jikan-kanshi.jikan-kanshi")
 
 local function setup()
-    Data:ensure_data_path_exists()
+    Data:sync()
     vim.api.nvim_create_autocmd("BufNew", {
         group = augroup,
         desc = "Start the duration timer for the open filetype",
