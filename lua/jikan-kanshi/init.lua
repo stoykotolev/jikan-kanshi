@@ -4,12 +4,14 @@ local BufFunctions = require("jikan-kanshi.jikan-kanshi")
 
 local function setup()
   Data:sync()
-  vim.api.nvim_create_autocmd("BufNew", {
+  vim.api.nvim_create_autocmd({ "BufAdd" }, {
     group = augroup,
     desc = "Start the duration timer for the open filetype",
     once = true,
     callback = function()
-      BufFunctions:bufEnter()
+      vim.schedule(function()
+        BufFunctions:bufEnter()
+      end)
     end,
   })
 
