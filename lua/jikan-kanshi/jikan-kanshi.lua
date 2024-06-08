@@ -11,7 +11,6 @@ local M = {}
 
 function M:bufEnter()
   fileType = vim.bo.filetype
-  print("ft", fileType)
   if checkInvalidFT(fileType) then
     return
   end
@@ -24,9 +23,7 @@ function M:bufLeave()
   end
   endTime = os.time()
   local timeSpent = os.difftime(endTime, startTime)
-  -- Add timeSpent to the existing value or set it if it doesn't exist
-  Data.data[fileType] = (Data.data[fileType] or 0) + timeSpent
-  Data:write()
+  Data:update(fileType, timeSpent)
 end
 
 return M
