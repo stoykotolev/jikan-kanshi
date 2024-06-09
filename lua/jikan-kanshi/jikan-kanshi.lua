@@ -25,7 +25,6 @@ function M:bufLeave(config)
   endTime = os.time()
   local timeSpent = os.difftime(endTime, startTime)
   config.data:update(fileType, timeSpent)
-  config.data:sync()
 end
 
 return M

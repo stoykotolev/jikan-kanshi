@@ -18,7 +18,7 @@ end
 
 --- @param error string
 function Logger:log_error(error)
-  Path:new(self.error_log_path):write(error, "a")
+  Path:new(self.error_log_path):write(error .. "\n", "a")
 end
 
 return Logger
