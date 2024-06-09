@@ -1,5 +1,3 @@
-local Data = require("jikan-kanshi.data")
-
 local function checkInvalidFT(fileType)
   return fileType == nil or fileType == "" or fileType == "TelescopePrompt"
 end
@@ -9,6 +7,7 @@ local fileType
 
 local M = {}
 
+--- Called when entering a buffer and the tracking needs to start
 function M:bufEnter()
   fileType = vim.bo.filetype
   if checkInvalidFT(fileType) then
@@ -17,13 +16,16 @@ function M:bufEnter()
   startTime = os.time()
 end
 
-function M:bufLeave()
+--- Called when leaving a buffer and the tracking needs to end
+--- @param config JikanKanshiConfig
+function M:bufLeave(config)
   if checkInvalidFT(fileType) then
     return
   end
   endTime = os.time()
   local timeSpent = os.difftime(endTime, startTime)
-  Data:update(fileType, timeSpent)
+  config.data:update(fileType, timeSpent)
+  config.data:sync()
 end
 
 return M

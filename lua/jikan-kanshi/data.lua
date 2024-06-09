@@ -1,13 +1,8 @@
 local Path = require("plenary.path")
 
 local data_path = string.format("%s/jikan-kanshi", vim.fn.stdpath("data"))
-local error_file = string.format("%s/jikan-kanshi/%s", vim.fn.stdpath("data"), "error_log")
 local data_path_exists = false
 local file = string.format("%s/filetype.json", data_path)
-
-local function log_error(error)
-  Path:new(error_file):write(error, "a")
-end
 
 local function ensure_data_path()
   if data_path_exists then
@@ -68,7 +63,6 @@ function Data:new()
   local ok, data = pcall(read_data, file)
 
   if not ok then
-    log_error(string.format("Failed opening the data file. %s", data))
     data = {}
   end
 
@@ -88,13 +82,13 @@ function Data:sync()
   local ok, data = pcall(read_data, self.file_path)
 
   if not ok then
-    log_error(data)
-    -- something needs to happen here
-    return -- kek
+    -- config.logger.log_error(config.logger, "Failed syncing the jikan kashi data file.")
+    error("Unable to update the data file")
+    return
   end
 
   for k, v in pairs(self._data) do
-    local new_time = data[k] + v
+    local new_time = (data[k] or 0) + v
     data[k] = new_time
   end
 
@@ -105,11 +99,6 @@ end
 --- @param file_type string
 --- @param duration number
 function Data:update(file_type, duration)
-  print("Current data", self._data)
-  if self.has_error then
-    log_error("Failed updating the jikan kashi data file.")
-    error("Unable to update the data file")
-  end
   self._data[file_type] = (self._data[file_type] or 0) + duration
 end
 
