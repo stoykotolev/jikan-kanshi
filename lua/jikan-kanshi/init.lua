@@ -32,12 +32,21 @@ local function setup()
     end,
   })
 
-  vim.api.nvim_create_autocmd("QuitPre", {
+  vim.api.nvim_create_autocmd("BufLeave", {
     group = augroup,
     desc = "End the duration timer for the open filetype",
     once = true,
     callback = function()
       BufFunctions:bufLeave(config)
+    end,
+  })
+
+  vim.api.nvim_create_autocmd({ "QuitPre" }, {
+    group = augroup,
+    desc = "Start the duration timer for the open filetype",
+    once = true,
+    callback = function()
+      config.data:sync()
     end,
   })
 end

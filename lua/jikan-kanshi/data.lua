@@ -73,8 +73,7 @@ function Data:new()
   }, self)
 end
 
---- The whole idea of this function is to get the current data that you have
---  and then sync it with the existing data in the file, as it might be different
+--- Sync the data between the current table in memory and the exist local file
 function Data:sync()
   if self.has_error then
     return
@@ -82,7 +81,6 @@ function Data:sync()
   local ok, data = pcall(read_data, self.file_path)
 
   if not ok then
-    -- config.logger.log_error(config.logger, "Failed syncing the jikan kashi data file.")
     error("Unable to update the data file")
     return
   end
