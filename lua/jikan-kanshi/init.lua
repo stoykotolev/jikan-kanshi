@@ -28,31 +28,18 @@ local function setup()
       vim.schedule(function()
         BufFunctions:bufEnter()
       end)
-    end,
-  })
-
-  vim.api.nvim_create_autocmd("BufEnter", {
-    group = augroup,
-    desc = "Start the duration timer for the open filetype",
-    callback = function()
       BufFunctions:bufEnter()
     end,
   })
 
-  vim.api.nvim_create_autocmd("BufLeave", {
-    group = augroup,
-    desc = "End the duration timer for the open filetype",
-    callback = function()
-      BufFunctions:bufLeave(config)
-    end,
-  })
-
-  vim.api.nvim_create_autocmd({ "QuitPre" }, {
+  vim.api.nvim_create_autocmd({ "QuitPre", "BufLeave" }, {
     group = augroup,
     desc = "Start the duration timer for the open filetype",
-    callback = function()
+    callback = function(ev)
       BufFunctions:bufLeave(config)
-      config.data:sync()
+      if ev.event == "QuitPre" then
+        config.data:sync()
+      end
     end,
   })
 
