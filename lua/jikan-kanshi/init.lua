@@ -24,7 +24,6 @@ local function setup()
   vim.api.nvim_create_autocmd({ "BufAdd" }, {
     group = augroup,
     desc = "Start the duration timer for the open filetype",
-    once = true,
     callback = function()
       vim.schedule(function()
         BufFunctions:bufEnter()
@@ -35,7 +34,6 @@ local function setup()
   vim.api.nvim_create_autocmd("BufLeave", {
     group = augroup,
     desc = "End the duration timer for the open filetype",
-    once = true,
     callback = function()
       BufFunctions:bufLeave(config)
     end,
@@ -44,11 +42,15 @@ local function setup()
   vim.api.nvim_create_autocmd({ "QuitPre" }, {
     group = augroup,
     desc = "Start the duration timer for the open filetype",
-    once = true,
     callback = function()
+      BufFunctions:bufLeave(config)
       config.data:sync()
     end,
   })
+
+  vim.api.nvim_create_user_command("JikanData", function()
+    config.data:get_data()
+  end, {})
 end
 
 return { setup = setup }

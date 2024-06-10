@@ -73,6 +73,9 @@ function Data:new()
   }, self)
 end
 
+function Data:get_data()
+  print(vim.inspect(self._data))
+end
 --- Sync the data between the current table in memory and the exist local file
 function Data:sync()
   if self.has_error then
