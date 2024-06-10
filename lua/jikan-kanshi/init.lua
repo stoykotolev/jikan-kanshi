@@ -21,7 +21,7 @@ end
 local config = JikanKanshi:new()
 
 local function setup()
-  vim.api.nvim_create_autocmd({ "BufAdd" }, {
+  vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = augroup,
     desc = "Start the duration timer for the open filetype",
     callback = function()
