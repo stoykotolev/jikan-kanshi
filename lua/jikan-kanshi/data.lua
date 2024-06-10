@@ -53,34 +53,24 @@ end
 --- @class JikanKanshiData
 --- @field _data JikanKanshiRawData
 --- @field file_path string
---- @field has_error boolean
 local Data = {}
 
 Data.__index = Data
 
 --- Either creates or reads from the existing file for filetypes.
 function Data:new()
-  local ok, data = pcall(read_data, file)
-
-  if not ok then
-    data = {}
-  end
-
   return setmetatable({
-    _data = data,
+    _data = {},
     file_path = file,
-    has_error = not ok,
   }, self)
 end
 
 function Data:get_data()
   print(vim.inspect(self._data))
 end
+
 --- Sync the data between the current table in memory and the exist local file
 function Data:sync()
-  if self.has_error then
-    return
-  end
   local ok, data = pcall(read_data, self.file_path)
 
   if not ok then
@@ -89,8 +79,11 @@ function Data:sync()
   end
 
   for k, v in pairs(self._data) do
-    local new_time = (data[k] or 0) + v
-    data[k] = new_time
+    if data[k] then
+      data[k] = data[k] + v
+    else
+      data[k] = v
+    end
   end
 
   pcall(write_data, self.file_path, data)
