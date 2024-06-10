@@ -1,7 +1,7 @@
 local augroup = vim.api.nvim_create_augroup("JikanKanshi", { clear = true })
 local Data = require("jikan-kanshi.data")
 local Logger = require("jikan-kanshi.logger")
-local BufFunctions = require("jikan-kanshi.jikan-kanshi")
+local Tracking = require("jikan-kanshi.tracking")
 
 --- @class JikanKanshiConfig
 --- @field data JikanKanshiData
@@ -26,9 +26,9 @@ local function setup()
     desc = "Start the duration timer for the open filetype",
     callback = function()
       vim.schedule(function()
-        BufFunctions:bufEnter()
+        Tracking:bufEnter()
       end)
-      BufFunctions:bufEnter()
+      Tracking:bufEnter()
     end,
   })
 
@@ -36,7 +36,7 @@ local function setup()
     group = augroup,
     desc = "Start the duration timer for the open filetype",
     callback = function(ev)
-      BufFunctions:bufLeave(config)
+      Tracking:bufLeave(config)
       if ev.event == "QuitPre" then
         config.data:sync()
       end
