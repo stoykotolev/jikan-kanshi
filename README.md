@@ -12,11 +12,11 @@
 
 ## TOC
 
-- [Goal] (#Goal)
-- [Installation] (#Installation)
-- [Getting started] (#Getting-started)
-- [Contribution] (#Contribution)
-- [Todo] (#Todo)
+- [Goal](#Goal)
+- [Installation](#Installation)
+- [Getting started](#Getting-started)
+- [Contribution](#Contribution)
+- [Todo](#Todo)
 
 ## Goal
 
