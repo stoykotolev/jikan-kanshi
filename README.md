@@ -31,9 +31,7 @@ It detects when your neovim instance is in and out of focus and makes sure that 
 
 ```lua
 {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim" }
+    "stoykotolev/jikan-kanshi",
 }
 ```
 
